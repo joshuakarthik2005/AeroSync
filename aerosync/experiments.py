@@ -55,6 +55,8 @@ def run_report(scenarios: list[str] | None = None, seeds: list[int] | None = Non
                 res = run_single(sc, ctl, seed)
                 path = out / "runs" / f"{sc}_{ctl}_seed{seed}.json"
                 d = res.to_dict(include_messages=False)
+                # Keep runs compact: per-bid auction logs are reproducible via `explain`.
+                d["auctions"], d["decisions"] = {}, []
                 path.write_text(json.dumps(d, separators=(",", ":")), encoding="utf-8")
                 rows.append({"scenario": sc, "controller": ctl, "seed": seed, **res.metrics})
     _write_csv(out / "runs.csv", rows)

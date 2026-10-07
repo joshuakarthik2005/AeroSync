@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import contextlib
 import subprocess
 import sys
 import time
@@ -45,6 +46,11 @@ ControllerOpt = Annotated[str, typer.Option("--controller", "-c",
 def _check_controller(name: str) -> None:
     if name not in CONTROLLER_NAMES:
         raise typer.BadParameter(f"controller must be one of {CONTROLLER_NAMES}")
+
+
+def _status(msg: str):  # type: ignore[no-untyped-def]
+    """Spinner for interactive use; silent when the console is being recorded."""
+    return contextlib.nullcontext() if console.record else console.status(msg)
 
 
 def _header(title: str) -> None:
@@ -139,7 +145,7 @@ def compare_cmd(scenario: ScenarioOpt = "storm_disruption", seed: SeedOpt = 42,
     from aerosync.viz.charts import compare_chart
 
     _header(f"compare controllers on {scenario} (seed {seed})")
-    with console.status("Running 3 controllers..."):
+    with _status("Running 3 controllers..."):
         results = compare(scenario, seed)
     table = {c: r.metrics for c, r in results.items()}
     console.print(tv.metrics_table(table, title=f"{scenario} - seed {seed}"))
@@ -185,20 +191,21 @@ def disrupt(scenario: ScenarioOpt = "normal_day",
     ev = make_event(event, at, **params)
     _header(f"disrupt {scenario}: {ev.describe()} at step {at}")
     t_ev = at * STEP_MIN
-    with console.status("Running baseline day and disrupted day..."):
+    with _status("Running baseline day and disrupted day..."):
         base = run_single(scenario, controller, seed)
         hit = run_single(scenario, controller, seed, extra_events=[ev])
         others = {c: run_single(scenario, c, seed, extra_events=[ev])
                   for c in CONTROLLER_NAMES if c != controller}
     console.print(f"Fault time: [bold]{fmt_clock(t_ev, hit.start_hour)}[/] - {ev.describe()}")
     console.print(tv.repair_view(hit, since=t_ev))
-    moved = {row["flight"] for r in hit.repairs if r["t"] >= t_ev for row in r["changed"]}
+    moved = {row["flight"] for r in hit.repairs if r["t"] == t_ev for row in r["changed"]}
     lo = max(0, t_ev - 60)
     hi = t_ev + 240
     console.print(tv.gantt(base, t0=lo, t1=hi, resolution=5))
     console.print(Text("  ^ BEFORE: same seed, no fault", style="bold"))
     console.print(tv.gantt(hit, t0=lo, t1=hi, resolution=5, highlight=moved))
-    console.print(Text("  ^ AFTER: fault injected (yellow = moved by repair, x = closed)",
+    console.print(Text("  ^ AFTER: fault injected (yellow = moved by the repair at the fault "
+                       "time, x = closed)",
                        style="bold"))
     table = {f"{controller} (no fault)": base.metrics, controller: hit.metrics}
     table.update({c: r.metrics for c, r in others.items()})
@@ -226,7 +233,7 @@ def route(src: Annotated[str, typer.Option("--from", help="Start node.")] = "HAN
           dst: Annotated[str, typer.Option("--to", help="Goal node.")] = "G7",
           seed: SeedOpt = 42, scenario: ScenarioOpt = "rush_hour",
           kind: Annotated[str, typer.Option(help="tug | fuel | bus")] = "tug",
-          at: Annotated[int, typer.Option(help="Step whose traffic is used.")] = 24) -> None:
+          at: Annotated[int, typer.Option(help="Step whose traffic is used.")] = 20) -> None:
     """Plan an A* route on the live apron graph and show its cost breakdown."""
     from aerosync.agents.vehicle_agent import GroundVehicleAgent
     from aerosync.ai.astar import dijkstra
@@ -250,6 +257,8 @@ def route(src: Annotated[str, typer.Option("--from", help="Start node.")] = "HAN
 
     dj = dijkstra(sim.airport.adjacency, src, dst, cost_fn=cost)
     static = veh.plan_static(sim.airport, dst, t, sim.edge_multiplier, sim.edge_cleared)
+    static_cost = sum(cost(e["u"], e["v"], float(e["length_m"])) or 0.0  # type: ignore[arg-type]
+                      for e in static.edges)
     tbl = Table(title=f"A* path at {sim.clock(t)}", header_style="bold white on #1d2733")
     for c in ("#", "Edge", "Length (m)", "Free-flow (min)", "Congestion x", "Cost (min)"):
         tbl.add_column(c, justify="right" if c != "Edge" else "left")
@@ -265,7 +274,7 @@ def route(src: Annotated[str, typer.Option("--from", help="Start node.")] = "HAN
         f"Dijkstra (h=0) cost {dj.cost:.2f} min, nodes expanded {dj.expanded} "
         f"(same optimum: {abs(dj.cost - r.minutes) < 1e-9})\n"
         f"Static shortest-distance path (baselines): {' -> '.join(static.path)} = "
-        f"{static.minutes:.2f} min\n"
+        f"{static_cost:.2f} min under the same conditions\n"
         f"Heuristic h(n) = euclid(n, {dst}) / {speed:.0f} m/min (admissible: congestion >= 1)",
         title="A* summary", border_style="#1aa37a"))
 
@@ -325,7 +334,8 @@ def serve(port: Annotated[int, typer.Option(help="Port.")] = 8501,
     """Launch the Streamlit dashboard."""
     app_path = Path(__file__).resolve().parents[1] / "webapp" / "app.py"
     cmd = [sys.executable, "-m", "streamlit", "run", str(app_path), "--server.port", str(port),
-           "--browser.gatherUsageStats", "false", "--theme.base", "light"]
+           "--browser.gatherUsageStats", "false", "--theme.base", "light",
+           "--theme.primaryColor", "#2a78d6"]
     if headless:
         cmd += ["--server.headless", "true"]
     console.print(f"Starting dashboard on http://localhost:{port} (Ctrl+C to stop)")

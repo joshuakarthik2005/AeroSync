@@ -27,7 +27,7 @@ SURFACE = "#ffffff"
 CRITICAL = "#d03b3b"
 SCENARIO_LABELS = {"normal_day": "Normal day", "rush_hour": "Rush hour",
                    "storm_disruption": "Storm disruption", "gate_failure": "Gate failure"}
-DPI = 120
+DPI = 150
 
 
 def _style(ax: Any) -> None:
@@ -64,8 +64,8 @@ def metric_bars(summary: dict[str, Any], metric: str, path: Path) -> Path:
         if any(stds):
             ax.errorbar(xs, means, yerr=stds, fmt="none", ecolor=TEXT2, elinewidth=1,
                         capsize=3, zorder=4)
-        for b, m in zip(bars, means, strict=False):
-            ax.annotate(f"{m:,.1f}", (b.get_x() + b.get_width() / 2, m), xytext=(0, 4),
+        for b, m, sd in zip(bars, means, stds, strict=False):
+            ax.annotate(f"{m:,.1f}", (b.get_x() + b.get_width() / 2, m + sd), xytext=(0, 4),
                         textcoords="offset points", ha="center", va="bottom", fontsize=10,
                         color=TEXT)
     ax.set_xticks(range(len(scenarios)))
@@ -102,7 +102,7 @@ def overview_grid(summary: dict[str, Any], path: Path) -> Path:
     fig.legend(handles, labels, loc="upper center", ncols=3, frameon=False, fontsize=13)
     fig.suptitle("AeroSync vs baselines - all headline metrics", x=0.01, ha="left",
                  fontsize=17, color=TEXT, fontweight="bold", y=1.02)
-    fig.tight_layout(rect=(0, 0, 1, 0.95))
+    fig.tight_layout(rect=(0, 0, 1, 0.97))
     return _save(fig, path)
 
 
@@ -126,7 +126,7 @@ def compare_chart(results: dict[str, dict[str, float]], title: str, path: Path) 
 
 
 def gantt_chart(res: SimResult, path: Path, title: str, highlight: set[str] | None = None,
-                marker_t: int | None = None) -> Path:
+                marker_t: int | None = None, t0: int = 0, t1: int | None = None) -> Path:
     """Gate-occupancy Gantt from actual on/off-block times."""
     highlight = highlight or set()
     stands = res.stands
@@ -152,7 +152,7 @@ def gantt_chart(res: SimResult, path: Path, title: str, highlight: set[str] | No
             color, edge = "#f2a9a9", CRITICAL
         ax.add_patch(Rectangle((f["on_block"], ypos[f["stand"]] - 0.36), end - f["on_block"],
                                0.72, facecolor=color, edgecolor=edge, linewidth=1, zorder=3))
-        if end - f["on_block"] >= 35:
+        if end - f["on_block"] >= 35 and t0 <= (f["on_block"] + end) / 2 <= t1:
             ax.text((f["on_block"] + end) / 2, ypos[f["stand"]], f["id"], ha="center",
                     va="center", fontsize=8, color=TEXT, zorder=4)
     if marker_t is not None:
@@ -162,8 +162,9 @@ def gantt_chart(res: SimResult, path: Path, title: str, highlight: set[str] | No
     ax.set_yticks(list(ypos.values()))
     ax.set_yticklabels(list(ypos.keys()), fontsize=10, color=TEXT)
     ax.set_ylim(-0.6, len(stands) - 0.2)
-    ax.set_xlim(0, t_end)
-    ticks = list(range(0, t_end + 1, 60))
+    t1 = t_end if t1 is None else t1
+    ax.set_xlim(t0, t1)
+    ticks = list(range(t0 - t0 % 60, t1 + 1, 60))
     ax.set_xticks(ticks)
     ax.set_xticklabels([fmt_clock(t, res.start_hour) for t in ticks], fontsize=10)
     ax.set_title(title, loc="left", fontsize=15, color=TEXT, fontweight="bold", pad=12)
@@ -173,8 +174,8 @@ def gantt_chart(res: SimResult, path: Path, title: str, highlight: set[str] | No
               Patch(facecolor="#f6b38f", edgecolor="#eb6834", label="moved by repair"),
               Patch(facecolor="#f2a9a9", edgecolor=CRITICAL, label="hit a conflict"),
               Patch(facecolor="#f3d6d6", edgecolor=CRITICAL, hatch="//", label="stand closed")]
-    ax.legend(handles=legend, frameon=False, ncols=4, loc="upper right",
-              bbox_to_anchor=(1, 1.07), fontsize=10)
+    ax.legend(handles=legend, frameon=False, ncols=4, loc="upper left",
+              bbox_to_anchor=(0, -0.06), fontsize=10)
     return _save(fig, path)
 
 
@@ -252,7 +253,7 @@ def architecture_diagram(path: Path) -> Path:
     box(2, 82, 30, 9, "Terminal CLI (Typer + Rich)", "#1d2733")
     box(35, 82, 30, 9, "Streamlit dashboard (6 tabs)", "#1d2733")
     box(68, 82, 30, 9, "Experiments + metrics engine", "#1d2733")
-    ax.text(2, 77, "AI layer - independent of the UI", fontsize=12, color=TEXT2)
+    ax.text(53, 77, "AI layer - independent of the UI", fontsize=12, color=TEXT2)
     box(2, 58, 22, 16, "Flight agents\n(request / re-request)", "#2a78d6")
     box(27, 58, 22, 16, "Coordinator agent\n(auctioneer, planner,\nrepairer)", "#4a3aa7")
     box(52, 58, 22, 16, "Gate agents x16\n(bid / refuse,\n1-hop view)", "#2a78d6")
@@ -291,11 +292,13 @@ def csp_example_diagram(trace: list[dict[str, Any]], tasks: list[dict[str, Any]]
     header = ["Step", "MRV picks", "Value (stand, hold)", "Cost", "Pruned"] + [
         f"|D({n})|" for n in names]
     rows = [["0", "-", "initial domains", "", ""] + [str(initial_domains[n]) for n in names]]
-    for st in trace:
+    for st in trace[:14]:
         rows.append([str(st["step"]), st["var"], f"{st['value'][0]}, {st['value'][1]} min",
                      f"{st['cost']:.1f}", str(st["pruned"])]
                     + [str(st["domain_sizes"].get(n, "=")) for n in names])
-    tbl = ax1.table(cellText=rows, colLabels=header, loc="upper left", cellLoc="center")
+    widths = [0.07, 0.1, 0.17, 0.08, 0.08] + [0.1] * len(names)
+    tbl = ax1.table(cellText=rows, colLabels=header, loc="upper left", cellLoc="center",
+                    colWidths=widths)
     tbl.auto_set_font_size(False)
     tbl.set_fontsize(10.5)
     tbl.scale(1, 2.0)

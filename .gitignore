@@ -30,3 +30,4 @@ desktop.ini
 # Scratch output from ad-hoc runs (the curated results/ tree is committed)
 results/*_flights.csv
 results/*_seed*.json
+results/compare/

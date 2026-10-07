@@ -157,17 +157,19 @@ def explain_view(res: SimResult, fid: str) -> Group | Text:
                       f"{bd['reassignment']:.0f}", f"{bd.get('displacement', 0):.0f}",
                       res.clock(b["start"]), style=style)
         for r in a["refusals"]:
-            t.add_row(r["bidder"], "REFUSE", r["reason"], *[""] * 8, style="grey50")
+            t.add_row(r["bidder"], "REFUSE", *[""] * 8, r["reason"], style="grey50")
         items.append(t)
         items.append(Panel(a["reasoning"], title="Reasoning", border_style="#1aa37a"))
     return Group(*items)
 
 
-def repair_view(res: SimResult, since: int = 0) -> Group:
+def repair_view(res: SimResult, since: int = 0, limit: int = 3) -> Group:
     """Repairs triggered at or after ``since`` (minutes)."""
     items: list[Any] = []
-    for r in [r for r in res.repairs if r["t"] >= since][:6]:
-        t = Table(title=f"Min-conflicts repair at {res.clock(r['t'])} - trigger: {r['trigger']}",
+    reps = [r for r in res.repairs if r["t"] >= since]
+    for r in reps[:limit]:
+        t = Table(title=f"{r.get('method', 'min-conflicts').capitalize()} repair at "
+                        f"{res.clock(r['t'])} - trigger: {r['trigger']}",
                   header_style="bold white on #1d2733")
         for c in ("Flight", "Before", "After", "Old on-block", "New on-block"):
             t.add_column(c)
@@ -178,6 +180,9 @@ def repair_view(res: SimResult, since: int = 0) -> Group:
         items.append(Text(f"  conflicts {r['conflicts_before']} -> {r['conflicts_after']} in "
                           f"{r['steps']} step(s), {r['time_ms']:.1f} ms; agents involved: "
                           + ", ".join(r["agents"]), style="#1aa37a"))
+    if len(reps) > limit:
+        items.append(Text(f"  ... and {len(reps) - limit} smaller follow-up repair(s) "
+                          "(displacements / drift) later in the day.", style="#52514e"))
     if not items:
         items.append(Text("No min-conflicts repair was needed after this event.", style="yellow"))
     return Group(*items)
