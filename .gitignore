@@ -18,7 +18,7 @@ env/
 
 # Streamlit secrets
 .streamlit/secrets.toml
-.streamlit/
+!.streamlit/config.toml
 
 # OS / editor
 .DS_Store

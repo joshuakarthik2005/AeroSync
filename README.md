@@ -211,7 +211,7 @@ pip install -e ".[dev]"
 python -m playwright install chromium
 ```
 
-`pip install -r requirements.txt` also works. With `make` available, `make install` does all of the above.
+`pip install -r requirements.txt` installs only the runtime dependencies (enough for the dashboard). The tests and screenshot scripts need the `dev` extras. With `make` available, `make install` does all of the above.
 
 ## Quick start
 
@@ -287,6 +287,16 @@ Start the dashboard with `aerosync serve`. The sidebar picks the scenario, the s
 | **About / PEAS** | PEAS table, environment-characteristics cards, architecture diagram and parameters |
 
 Screenshots of all 6 tabs are in [`docs/slide_assets/screenshots/`](docs/slide_assets/screenshots/).
+
+### Deploying to Streamlit Community Cloud
+
+The repository is ready for [Streamlit Community Cloud](https://share.streamlit.io):
+
+1. Sign in at share.streamlit.io with GitHub and choose **Create app → Deploy a public app from GitHub**.
+2. Repository `joshuakarthik2005/AeroSync`, branch `main`, main file path **`streamlit_app.py`**.
+3. Under *Advanced settings*, pick Python 3.12, then **Deploy**.
+
+`streamlit_app.py` runs the dashboard from the repository root, `requirements.txt` holds the runtime dependencies and `.streamlit/config.toml` sets the theme. The app needs no secrets and runs offline. The Benchmark tab shows the committed `results/`. Pressing *Run benchmark now* on the cloud writes to the app's temporary disk, so those new results are lost when the app restarts.
 
 ## Scenarios
 
