@@ -1,0 +1,19 @@
+$ aerosync compare --scenario storm_disruption --seed 42
+───────────────────────────────────────────────── compare controllers on storm_disruption (seed 42) ──────────────────────────────────────────────────
+                 storm_disruption - seed 42                  
+┌───────────────────────────────┬───────┬────────┬──────────┐
+│ Metric                        │  fcfs │ greedy │ aerosync │
+├───────────────────────────────┼───────┼────────┼──────────┤
+│ Avg passenger walk (m)        │ 669.6 │  571.7 │    515.6 │
+│ Avg departure delay (min)     │  46.0 │   38.9 │     34.0 │
+│ Contact-gate utilisation (%)  │  63.1 │   60.4 │     61.3 │
+│ Remote-stand ratio (%)        │  22.2 │   25.0 │     20.8 │
+│ Schedule conflicts            │    24 │     18 │        0 │
+│ Reassignments                 │     3 │      2 │        7 │
+│ Avg ground-vehicle trip (min) │   4.3 │    4.3 │      3.5 │
+│ Decision compute time (ms)    │ 271.1 │  264.2 │  3,150.1 │
+└───────────────────────────────┴───────┴────────┴──────────┘
+┌───────────────────────────────────────────────────────────────────── Headline ─────────────────────────────────────────────────────────────────────┐
+│ AeroSync vs greedy: walk 516 vs 572 m, departure delay 34.0 vs 38.9 min, conflicts 0 vs 18, reassignments 7 vs 2.                                  │
+└────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
+Saved per-run JSON/CSV to results\compare/ and chart results\compare\charts\compare_storm_disruption_seed42.png

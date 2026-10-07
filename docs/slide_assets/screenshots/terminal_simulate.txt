@@ -1,0 +1,23 @@
+$ aerosync simulate --scenario rush_hour --controller aerosync --seed 42
+───────────────────────────────────────────────────── simulate rush_hour with aerosync (seed 42) ─────────────────────────────────────────────────────
+┌─────────────────────────────────────────────────────────────────── Run summary ────────────────────────────────────────────────────────────────────┐
+│ rush_hour under aerosync (seed 42)                                                                                                                 │
+│ Window 07:00-13:00, 46 flights, 46 departed by 13:00                                                                                               │
+│ Messages: CFP 848, BID 720, REFUSE 128, AWARD 155, STATE_UPDATE 384, FAULT 0                                                                       │
+│ Auctions 53, repairs 21, vehicle dispatches 102, towing 0, hard violations 0                                                                       │
+│ CSP: CSP assigned 46/46 flights with 46 nodes, 0 backtracks and 7824 values pruned by forward checking.                                            │
+└────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
+                  Metrics                   
+┌───────────────────────────────┬──────────┐
+│ Metric                        │ aerosync │
+├───────────────────────────────┼──────────┤
+│ Avg passenger walk (m)        │    362.0 │
+│ Avg departure delay (min)     │     12.5 │
+│ Contact-gate utilisation (%)  │     53.5 │
+│ Remote-stand ratio (%)        │     21.7 │
+│ Schedule conflicts            │        0 │
+│ Reassignments                 │        5 │
+│ Avg ground-vehicle trip (min) │      2.8 │
+│ Decision compute time (ms)    │    899.3 │
+└───────────────────────────────┴──────────┘
+Avg hold 10.65 min | on-time (<=15 min) 69.6% | terminal mismatch 8.7% | wall time 0.91 s

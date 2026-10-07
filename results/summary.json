@@ -1,0 +1,784 @@
+{
+  "seeds": [
+    42,
+    43,
+    44,
+    45,
+    46
+  ],
+  "command": "aerosync report --scenario all --out results --seeds 42,43,44,45,46",
+  "timestep_min": 5,
+  "weights": {
+    "walk": 0.05,
+    "mismatch": 40.0,
+    "remote": 60.0,
+    "buffer_risk": 25.0,
+    "neighbour": 100.0,
+    "delay": 4.0,
+    "reassign": 15.0
+  },
+  "headline_metrics": [
+    "avg_walk_m",
+    "avg_dep_delay_min",
+    "gate_utilisation_pct",
+    "remote_ratio_pct",
+    "schedule_conflicts",
+    "reassignments",
+    "avg_vehicle_trip_min",
+    "compute_ms"
+  ],
+  "results": {
+    "normal_day": {
+      "fcfs": {
+        "flights": {
+          "mean": 110.0,
+          "std": 0.0
+        },
+        "flights_completed": {
+          "mean": 110.0,
+          "std": 0.0
+        },
+        "avg_walk_m": {
+          "mean": 634.6,
+          "std": 33.93
+        },
+        "avg_dep_delay_min": {
+          "mean": 6.73,
+          "std": 2.61
+        },
+        "gate_utilisation_pct": {
+          "mean": 54.42,
+          "std": 0.79
+        },
+        "remote_ratio_pct": {
+          "mean": 15.66,
+          "std": 1.37
+        },
+        "schedule_conflicts": {
+          "mean": 10.2,
+          "std": 4.49
+        },
+        "reassignments": {
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "avg_vehicle_trip_min": {
+          "mean": 3.11,
+          "std": 0.1
+        },
+        "compute_ms": {
+          "mean": 88.0,
+          "std": 70.41
+        },
+        "avg_hold_min": {
+          "mean": 5.96,
+          "std": 3.26
+        },
+        "on_time_pct": {
+          "mean": 84.72,
+          "std": 6.14
+        },
+        "terminal_mismatch_pct": {
+          "mean": 36.36,
+          "std": 3.64
+        },
+        "towing_movements": {
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "hard_violations": {
+          "mean": 0.0,
+          "std": 0.0
+        }
+      },
+      "greedy": {
+        "flights": {
+          "mean": 110.0,
+          "std": 0.0
+        },
+        "flights_completed": {
+          "mean": 110.0,
+          "std": 0.0
+        },
+        "avg_walk_m": {
+          "mean": 429.72,
+          "std": 30.7
+        },
+        "avg_dep_delay_min": {
+          "mean": 6.0,
+          "std": 1.36
+        },
+        "gate_utilisation_pct": {
+          "mean": 48.68,
+          "std": 1.62
+        },
+        "remote_ratio_pct": {
+          "mean": 23.8,
+          "std": 1.03
+        },
+        "schedule_conflicts": {
+          "mean": 7.2,
+          "std": 2.68
+        },
+        "reassignments": {
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "avg_vehicle_trip_min": {
+          "mean": 3.11,
+          "std": 0.05
+        },
+        "compute_ms": {
+          "mean": 133.22,
+          "std": 118.6
+        },
+        "avg_hold_min": {
+          "mean": 5.7,
+          "std": 2.56
+        },
+        "on_time_pct": {
+          "mean": 85.46,
+          "std": 4.77
+        },
+        "terminal_mismatch_pct": {
+          "mean": 16.38,
+          "std": 3.02
+        },
+        "towing_movements": {
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "hard_violations": {
+          "mean": 0.0,
+          "std": 0.0
+        }
+      },
+      "aerosync": {
+        "flights": {
+          "mean": 110.0,
+          "std": 0.0
+        },
+        "flights_completed": {
+          "mean": 110.0,
+          "std": 0.0
+        },
+        "avg_walk_m": {
+          "mean": 318.76,
+          "std": 18.69
+        },
+        "avg_dep_delay_min": {
+          "mean": 6.7,
+          "std": 2.27
+        },
+        "gate_utilisation_pct": {
+          "mean": 50.98,
+          "std": 1.81
+        },
+        "remote_ratio_pct": {
+          "mean": 18.56,
+          "std": 2.67
+        },
+        "schedule_conflicts": {
+          "mean": 0.6,
+          "std": 0.55
+        },
+        "reassignments": {
+          "mean": 5.8,
+          "std": 3.27
+        },
+        "avg_vehicle_trip_min": {
+          "mean": 2.7,
+          "std": 0.06
+        },
+        "compute_ms": {
+          "mean": 1521.72,
+          "std": 1212.08
+        },
+        "avg_hold_min": {
+          "mean": 6.73,
+          "std": 2.59
+        },
+        "on_time_pct": {
+          "mean": 86.54,
+          "std": 3.32
+        },
+        "terminal_mismatch_pct": {
+          "mean": 5.28,
+          "std": 1.78
+        },
+        "towing_movements": {
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "hard_violations": {
+          "mean": 0.0,
+          "std": 0.0
+        }
+      }
+    },
+    "rush_hour": {
+      "fcfs": {
+        "flights": {
+          "mean": 46.0,
+          "std": 0.0
+        },
+        "flights_completed": {
+          "mean": 46.0,
+          "std": 0.0
+        },
+        "avg_walk_m": {
+          "mean": 663.26,
+          "std": 84.32
+        },
+        "avg_dep_delay_min": {
+          "mean": 8.56,
+          "std": 2.69
+        },
+        "gate_utilisation_pct": {
+          "mean": 57.22,
+          "std": 2.59
+        },
+        "remote_ratio_pct": {
+          "mean": 21.3,
+          "std": 1.79
+        },
+        "schedule_conflicts": {
+          "mean": 5.6,
+          "std": 3.05
+        },
+        "reassignments": {
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "avg_vehicle_trip_min": {
+          "mean": 3.18,
+          "std": 0.15
+        },
+        "compute_ms": {
+          "mean": 68.5,
+          "std": 22.17
+        },
+        "avg_hold_min": {
+          "mean": 6.3,
+          "std": 3.01
+        },
+        "on_time_pct": {
+          "mean": 79.12,
+          "std": 6.83
+        },
+        "terminal_mismatch_pct": {
+          "mean": 39.12,
+          "std": 8.12
+        },
+        "towing_movements": {
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "hard_violations": {
+          "mean": 0.0,
+          "std": 0.0
+        }
+      },
+      "greedy": {
+        "flights": {
+          "mean": 46.0,
+          "std": 0.0
+        },
+        "flights_completed": {
+          "mean": 46.0,
+          "std": 0.0
+        },
+        "avg_walk_m": {
+          "mean": 512.66,
+          "std": 28.44
+        },
+        "avg_dep_delay_min": {
+          "mean": 8.43,
+          "std": 3.45
+        },
+        "gate_utilisation_pct": {
+          "mean": 55.18,
+          "std": 2.62
+        },
+        "remote_ratio_pct": {
+          "mean": 23.04,
+          "std": 2.47
+        },
+        "schedule_conflicts": {
+          "mean": 5.2,
+          "std": 1.92
+        },
+        "reassignments": {
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "avg_vehicle_trip_min": {
+          "mean": 3.17,
+          "std": 0.07
+        },
+        "compute_ms": {
+          "mean": 69.32,
+          "std": 17.24
+        },
+        "avg_hold_min": {
+          "mean": 6.83,
+          "std": 2.64
+        },
+        "on_time_pct": {
+          "mean": 79.12,
+          "std": 9.7
+        },
+        "terminal_mismatch_pct": {
+          "mean": 23.04,
+          "std": 2.47
+        },
+        "towing_movements": {
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "hard_violations": {
+          "mean": 0.0,
+          "std": 0.0
+        }
+      },
+      "aerosync": {
+        "flights": {
+          "mean": 46.0,
+          "std": 0.0
+        },
+        "flights_completed": {
+          "mean": 46.0,
+          "std": 0.0
+        },
+        "avg_walk_m": {
+          "mean": 352.16,
+          "std": 22.47
+        },
+        "avg_dep_delay_min": {
+          "mean": 9.13,
+          "std": 4.58
+        },
+        "gate_utilisation_pct": {
+          "mean": 55.58,
+          "std": 2.5
+        },
+        "remote_ratio_pct": {
+          "mean": 20.88,
+          "std": 1.92
+        },
+        "schedule_conflicts": {
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "reassignments": {
+          "mean": 3.2,
+          "std": 1.64
+        },
+        "avg_vehicle_trip_min": {
+          "mean": 2.85,
+          "std": 0.1
+        },
+        "compute_ms": {
+          "mean": 615.2,
+          "std": 147.07
+        },
+        "avg_hold_min": {
+          "mean": 7.52,
+          "std": 3.76
+        },
+        "on_time_pct": {
+          "mean": 77.38,
+          "std": 12.35
+        },
+        "terminal_mismatch_pct": {
+          "mean": 8.7,
+          "std": 2.69
+        },
+        "towing_movements": {
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "hard_violations": {
+          "mean": 0.0,
+          "std": 0.0
+        }
+      }
+    },
+    "storm_disruption": {
+      "fcfs": {
+        "flights": {
+          "mean": 72.0,
+          "std": 0.0
+        },
+        "flights_completed": {
+          "mean": 72.0,
+          "std": 0.0
+        },
+        "avg_walk_m": {
+          "mean": 671.28,
+          "std": 63.12
+        },
+        "avg_dep_delay_min": {
+          "mean": 52.22,
+          "std": 12.12
+        },
+        "gate_utilisation_pct": {
+          "mean": 62.78,
+          "std": 1.84
+        },
+        "remote_ratio_pct": {
+          "mean": 21.64,
+          "std": 0.77
+        },
+        "schedule_conflicts": {
+          "mean": 23.8,
+          "std": 2.28
+        },
+        "reassignments": {
+          "mean": 2.2,
+          "std": 0.84
+        },
+        "avg_vehicle_trip_min": {
+          "mean": 4.11,
+          "std": 0.25
+        },
+        "compute_ms": {
+          "mean": 293.38,
+          "std": 41.31
+        },
+        "avg_hold_min": {
+          "mean": 34.86,
+          "std": 9.77
+        },
+        "on_time_pct": {
+          "mean": 24.72,
+          "std": 7.51
+        },
+        "terminal_mismatch_pct": {
+          "mean": 40.02,
+          "std": 7.69
+        },
+        "towing_movements": {
+          "mean": 0.6,
+          "std": 0.55
+        },
+        "hard_violations": {
+          "mean": 0.0,
+          "std": 0.0
+        }
+      },
+      "greedy": {
+        "flights": {
+          "mean": 72.0,
+          "std": 0.0
+        },
+        "flights_completed": {
+          "mean": 72.0,
+          "std": 0.0
+        },
+        "avg_walk_m": {
+          "mean": 593.4,
+          "std": 26.4
+        },
+        "avg_dep_delay_min": {
+          "mean": 51.91,
+          "std": 13.96
+        },
+        "gate_utilisation_pct": {
+          "mean": 59.32,
+          "std": 2.9
+        },
+        "remote_ratio_pct": {
+          "mean": 25.28,
+          "std": 1.53
+        },
+        "schedule_conflicts": {
+          "mean": 23.2,
+          "std": 5.36
+        },
+        "reassignments": {
+          "mean": 3.0,
+          "std": 1.41
+        },
+        "avg_vehicle_trip_min": {
+          "mean": 4.03,
+          "std": 0.25
+        },
+        "compute_ms": {
+          "mean": 283.4,
+          "std": 61.81
+        },
+        "avg_hold_min": {
+          "mean": 35.97,
+          "std": 11.87
+        },
+        "on_time_pct": {
+          "mean": 30.28,
+          "std": 11.61
+        },
+        "terminal_mismatch_pct": {
+          "mean": 31.68,
+          "std": 2.65
+        },
+        "towing_movements": {
+          "mean": 0.8,
+          "std": 1.1
+        },
+        "hard_violations": {
+          "mean": 0.0,
+          "std": 0.0
+        }
+      },
+      "aerosync": {
+        "flights": {
+          "mean": 72.0,
+          "std": 0.0
+        },
+        "flights_completed": {
+          "mean": 72.0,
+          "std": 0.0
+        },
+        "avg_walk_m": {
+          "mean": 479.16,
+          "std": 29.57
+        },
+        "avg_dep_delay_min": {
+          "mean": 39.43,
+          "std": 9.4
+        },
+        "gate_utilisation_pct": {
+          "mean": 62.22,
+          "std": 2.01
+        },
+        "remote_ratio_pct": {
+          "mean": 19.98,
+          "std": 1.57
+        },
+        "schedule_conflicts": {
+          "mean": 0.8,
+          "std": 1.1
+        },
+        "reassignments": {
+          "mean": 7.8,
+          "std": 1.92
+        },
+        "avg_vehicle_trip_min": {
+          "mean": 3.36,
+          "std": 0.09
+        },
+        "compute_ms": {
+          "mean": 5447.42,
+          "std": 2300.22
+        },
+        "avg_hold_min": {
+          "mean": 23.96,
+          "std": 6.95
+        },
+        "on_time_pct": {
+          "mean": 38.9,
+          "std": 12.58
+        },
+        "terminal_mismatch_pct": {
+          "mean": 21.1,
+          "std": 3.72
+        },
+        "towing_movements": {
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "hard_violations": {
+          "mean": 0.0,
+          "std": 0.0
+        }
+      }
+    },
+    "gate_failure": {
+      "fcfs": {
+        "flights": {
+          "mean": 54.0,
+          "std": 0.0
+        },
+        "flights_completed": {
+          "mean": 54.0,
+          "std": 0.0
+        },
+        "avg_walk_m": {
+          "mean": 582.18,
+          "std": 76.1
+        },
+        "avg_dep_delay_min": {
+          "mean": 21.5,
+          "std": 6.65
+        },
+        "gate_utilisation_pct": {
+          "mean": 62.88,
+          "std": 3.2
+        },
+        "remote_ratio_pct": {
+          "mean": 22.96,
+          "std": 2.1
+        },
+        "schedule_conflicts": {
+          "mean": 14.8,
+          "std": 2.77
+        },
+        "reassignments": {
+          "mean": 1.2,
+          "std": 0.45
+        },
+        "avg_vehicle_trip_min": {
+          "mean": 3.17,
+          "std": 0.1
+        },
+        "compute_ms": {
+          "mean": 123.56,
+          "std": 17.12
+        },
+        "avg_hold_min": {
+          "mean": 23.63,
+          "std": 5.79
+        },
+        "on_time_pct": {
+          "mean": 61.5,
+          "std": 6.58
+        },
+        "terminal_mismatch_pct": {
+          "mean": 32.96,
+          "std": 8.01
+        },
+        "towing_movements": {
+          "mean": 0.4,
+          "std": 0.55
+        },
+        "hard_violations": {
+          "mean": 0.0,
+          "std": 0.0
+        }
+      },
+      "greedy": {
+        "flights": {
+          "mean": 54.0,
+          "std": 0.0
+        },
+        "flights_completed": {
+          "mean": 54.0,
+          "std": 0.0
+        },
+        "avg_walk_m": {
+          "mean": 502.6,
+          "std": 42.95
+        },
+        "avg_dep_delay_min": {
+          "mean": 22.63,
+          "std": 5.05
+        },
+        "gate_utilisation_pct": {
+          "mean": 61.64,
+          "std": 2.05
+        },
+        "remote_ratio_pct": {
+          "mean": 25.94,
+          "std": 2.63
+        },
+        "schedule_conflicts": {
+          "mean": 14.8,
+          "std": 3.56
+        },
+        "reassignments": {
+          "mean": 1.0,
+          "std": 0.0
+        },
+        "avg_vehicle_trip_min": {
+          "mean": 3.11,
+          "std": 0.15
+        },
+        "compute_ms": {
+          "mean": 128.84,
+          "std": 26.44
+        },
+        "avg_hold_min": {
+          "mean": 24.78,
+          "std": 4.68
+        },
+        "on_time_pct": {
+          "mean": 58.16,
+          "std": 8.94
+        },
+        "terminal_mismatch_pct": {
+          "mean": 24.08,
+          "std": 3.45
+        },
+        "towing_movements": {
+          "mean": 0.4,
+          "std": 0.55
+        },
+        "hard_violations": {
+          "mean": 0.0,
+          "std": 0.0
+        }
+      },
+      "aerosync": {
+        "flights": {
+          "mean": 54.0,
+          "std": 0.0
+        },
+        "flights_completed": {
+          "mean": 54.0,
+          "std": 0.0
+        },
+        "avg_walk_m": {
+          "mean": 395.06,
+          "std": 15.13
+        },
+        "avg_dep_delay_min": {
+          "mean": 15.11,
+          "std": 3.91
+        },
+        "gate_utilisation_pct": {
+          "mean": 60.08,
+          "std": 2.88
+        },
+        "remote_ratio_pct": {
+          "mean": 22.96,
+          "std": 2.1
+        },
+        "schedule_conflicts": {
+          "mean": 0.2,
+          "std": 0.45
+        },
+        "reassignments": {
+          "mean": 3.4,
+          "std": 2.7
+        },
+        "avg_vehicle_trip_min": {
+          "mean": 2.77,
+          "std": 0.17
+        },
+        "compute_ms": {
+          "mean": 2516.32,
+          "std": 2564.4
+        },
+        "avg_hold_min": {
+          "mean": 19.93,
+          "std": 4.2
+        },
+        "on_time_pct": {
+          "mean": 66.68,
+          "std": 2.93
+        },
+        "terminal_mismatch_pct": {
+          "mean": 12.22,
+          "std": 1.66
+        },
+        "towing_movements": {
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "hard_violations": {
+          "mean": 0.0,
+          "std": 0.0
+        }
+      }
+    }
+  }
+}
