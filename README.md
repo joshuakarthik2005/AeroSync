@@ -379,11 +379,13 @@ ruff check .    # lint
 |---|---|
 | Course | Foundations of AI |
 | Project | AeroSync: Multi-Agent Airport Gate Assignment and Ground Operations Coordinator |
-| Team member 1 | _Name_ - _Roll number_ |
-| Team member 2 | _Name_ - _Roll number_ |
-| Team member 3 | _Name_ - _Roll number_ |
-| Instructor | _Name_ |
-| Institution | _University_ |
+| Team member 1 | A Joshua Karthik - CB.SC.U4CSE23501 |
+| Team member 2 | Akash B - CB.SC.U4CSE23502 |
+| Team member 3 | Midhunan Vijendra Prabhaharan - CB.SC.U4CSE23532 |
+| Team member 3 | Varun Hirthik - CB.SC.U4CSE23567 |
+| Team member 3 | Barath Arjun - CB.SC.U4CSE23569 |
+| Instructor | Sruthi Mam |
+| Institution | Amrita Vishwa Vidyapeetham |
 
 ## License
 
