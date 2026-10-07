@@ -1,0 +1,58 @@
+{
+  "name": "gate_failure",
+  "description": "A 6-hour window (09:00-15:00) where wide-body gate G4 suffers a jet-bridge failure at 11:00 and stays closed for the rest of the run.",
+  "start_hour": 9,
+  "steps": 72,
+  "weather_factor": 1.0,
+  "fleet": {
+    "tug": 6,
+    "fuel": 6,
+    "bus": 3
+  },
+  "generator": {
+    "n_flights": 54,
+    "wide_ratio": 0.28,
+    "international_ratio": 0.3,
+    "last_arrival_min": 260,
+    "peaks": [
+      [
+        70,
+        45,
+        0.5
+      ],
+      [
+        200,
+        45,
+        0.5
+      ]
+    ],
+    "delay_prob": 0.15,
+    "delay_min": [
+      5,
+      30
+    ],
+    "reveal_lead_min": [
+      20,
+      60
+    ]
+  },
+  "featured_flights": [
+    {
+      "id": "AI302",
+      "airline": "AI",
+      "size": "N",
+      "sched_arr": 125,
+      "sched_dep": 190,
+      "pax": 168,
+      "pref_terminal": "T1"
+    }
+  ],
+  "events": [
+    {
+      "kind": "gate_closure",
+      "at": 24,
+      "gate": "G4",
+      "duration": null
+    }
+  ]
+}

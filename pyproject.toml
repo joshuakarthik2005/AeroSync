@@ -1,0 +1,52 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "aerosync"
+version = "1.0.0"
+description = "Multi-Agent Airport Gate Assignment and Ground Operations Coordinator"
+readme = "README.md"
+license = { text = "MIT" }
+requires-python = ">=3.11"
+authors = [{ name = "AeroSync Team" }]
+keywords = ["multi-agent", "csp", "contract-net", "a-star", "airport", "gate-assignment"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+dependencies = [
+    "rich>=13.7",
+    "typer>=0.12",
+    "matplotlib>=3.8",
+    "plotly>=5.20",
+    "pandas>=2.1",
+    "streamlit>=1.36",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0",
+    "ruff>=0.5",
+    "playwright>=1.44",
+]
+
+[project.scripts]
+aerosync = "aerosync.cli.main:main"
+
+[tool.setuptools.packages.find]
+include = ["aerosync*"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+extend-exclude = [".venv"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "UP", "B"]
+ignore = ["B008"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"

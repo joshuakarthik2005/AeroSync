@@ -1,0 +1,51 @@
+{
+  "name": "rush_hour",
+  "description": "A 6-hour morning peak (07:00-13:00): 46 turnarounds packed into two tight banks that exceed stand capacity, 20% of flights delayed by up to 40 minutes.",
+  "start_hour": 7,
+  "steps": 72,
+  "weather_factor": 1.0,
+  "fleet": {
+    "tug": 6,
+    "fuel": 6,
+    "bus": 3
+  },
+  "generator": {
+    "n_flights": 46,
+    "wide_ratio": 0.25,
+    "international_ratio": 0.3,
+    "last_arrival_min": 250,
+    "peaks": [
+      [
+        70,
+        45,
+        0.55
+      ],
+      [
+        200,
+        45,
+        0.45
+      ]
+    ],
+    "delay_prob": 0.2,
+    "delay_min": [
+      5,
+      40
+    ],
+    "reveal_lead_min": [
+      20,
+      60
+    ]
+  },
+  "featured_flights": [
+    {
+      "id": "AI302",
+      "airline": "AI",
+      "size": "N",
+      "sched_arr": 60,
+      "sched_dep": 125,
+      "pax": 168,
+      "pref_terminal": "T1"
+    }
+  ],
+  "events": []
+}

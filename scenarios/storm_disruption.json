@@ -1,0 +1,76 @@
+{
+  "name": "storm_disruption",
+  "description": "An 8-hour afternoon (12:00-20:00) under a thunderstorm: 45% of arrivals delayed 10-90 min, apron edges 40% slower, gate G2 closed for 2 h and wide-body gate G9 closed for 3 h, plus a fuel-truck breakdown.",
+  "start_hour": 12,
+  "steps": 96,
+  "weather_factor": 1.0,
+  "fleet": {
+    "tug": 6,
+    "fuel": 6,
+    "bus": 3
+  },
+  "generator": {
+    "n_flights": 72,
+    "wide_ratio": 0.25,
+    "international_ratio": 0.3,
+    "last_arrival_min": 380,
+    "peaks": [
+      [
+        90,
+        50,
+        0.5
+      ],
+      [
+        270,
+        60,
+        0.5
+      ]
+    ],
+    "delay_prob": 0.45,
+    "delay_min": [
+      10,
+      90
+    ],
+    "reveal_lead_min": [
+      20,
+      60
+    ]
+  },
+  "featured_flights": [
+    {
+      "id": "AI302",
+      "airline": "AI",
+      "size": "N",
+      "sched_arr": 120,
+      "sched_dep": 185,
+      "pax": 168,
+      "pref_terminal": "T1"
+    }
+  ],
+  "events": [
+    {
+      "kind": "weather",
+      "at": 12,
+      "factor": 1.4,
+      "duration": 240
+    },
+    {
+      "kind": "gate_closure",
+      "at": 18,
+      "gate": "G2",
+      "duration": 120
+    },
+    {
+      "kind": "gate_closure",
+      "at": 30,
+      "gate": "G9",
+      "duration": 180
+    },
+    {
+      "kind": "vehicle_breakdown",
+      "at": 36,
+      "vehicle": "FUEL2",
+      "duration": 90
+    }
+  ]
+}
